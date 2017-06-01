@@ -1,0 +1,66 @@
+\RequirePackage{luatex85}
+\documentclass[tikz]{standalone}
+
+\input{preamble}
+
+\begin{document}
+
+\begin{tikzpicture}[show background rectangle]
+  \node[db] (db) {Database};
+  \node[component,below=of db] (master) {\emph{Work Queue}};
+
+  \draw[->] (master) -- +(-2,0) |- (db)
+    node[onarrow,near start,sloped,above] (m2) {updates};
+  \draw[->] (db) -- +(2,0) |- (master)
+    node[onarrow,near start,sloped,above] (m3) {tasks};
+
+  \node[db,minimum width=15mm,left=3cm of db] (dbs) {DBS};
+
+  \node[box,fit=(db)(master)(m2)(m3)] (lobster-master) {};
+  \node[boxlabel] at (lobster-master.north) {Lobster Master};
+
+  \draw[->] ($(dbs.east) + (0,2mm)$) -- ($(db.west) + (0,2mm)$)
+    node[onarrow,near start,above] (m1) {metadata};
+
+  \node[component,right=2.7cm of db] (t1) {Task};
+  \node[component,below=5mm of t1] (t2) {Task};
+
+  \node[box,fit=(t1)(t2)] (worker) {};
+  \node[boxlabel] at (worker.north) {Worker};
+
+  \draw[->] ($(master.south) + (1mm,0)$) -- +(0,-1) -| ($(worker.south) + (-1mm,0)$)
+    node[onarrow,near start,above] {tasks};
+  \draw[->] ($(worker.south) + (1mm,0)$) -- +(0,-1.4) -| ($(master.south) + (-1mm,0)$)
+    node[onarrow,near start,below] {task results};
+
+  \node[above=of lobster-master] (user) {
+    \begin{tikzpicture}[scale=.3]
+      % \begin{scope}
+      %   \clip (-1, 0) rectangle (1, 2.5);
+      %   \draw[fill=black] (0, 0) circle (1);
+      % \end{scope}
+      \draw[fill=black] plot [smooth cycle, tension=1] coordinates
+        {(-1, 0) (0, 1) (1, 0) (0, -.5)};
+      \draw[fill=black,draw=white,thick] (0, 1.4) circle (.7);
+    \end{tikzpicture}
+  };
+
+  \draw[->] (user) -- ($(lobster-master.north) + (0,2mm)$);
+
+  \node[component,right=15mm of user] (factory) {Factory};
+  \draw[->] (user) -- (factory);
+  \draw[->] (factory) -| ($(worker.north) + (0,2mm)$);
+
+  \node[db,minimum width=20mm,below right=18mm of worker.south] (storage) {Storage};
+  \draw[->] ($(t1.east) - (0,1mm)$) -| (storage)
+    node[onarrow,above,sloped,near end,anchor=south west] {output};
+  \draw[->] ($(t2.east) - (0,1mm)$) -| (storage);
+
+  \node[cloud,aspect=1.5,text width=15mm,font=\small,align=center,draw,right=18mm of factory] (input)
+    {WLCG\\Frontier\\CVMFS};
+  \draw[->] (input) |- ($(t1.east) + (0,1mm)$)
+    node[onarrow,above,sloped,near start] {input};
+  \draw[->] (input) |- ($(t2.east) + (0,1mm)$);
+\end{tikzpicture}
+
+\end{document}

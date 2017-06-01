@@ -1,0 +1,34 @@
+\usetikzlibrary{arrows,calc,fit,positioning,backgrounds,shapes}
+
+\usepackage{fontspec}
+\setmainfont{Source Sans Pro}
+
+\tikzset{
+  >=latex,
+  every path/.style={
+    shorten <=2pt,shorten >=2pt,>=stealth
+  },
+  background rectangle/.style={fill=white},
+  component/.style={
+    draw, rounded corners,
+    text depth=0pt,
+    minimum width=30mm,
+    minimum height=10mm
+  },
+  db/.style={
+    cylinder, shape aspect=.5, shape border rotate=90, draw,
+    text depth=0pt,
+    minimum width=30mm
+  },
+  onarrow/.style={
+    font=\footnotesize
+  },
+  box/.style={
+    draw=black!30!white,line width=2pt,rounded corners,inner sep=3mm
+  },
+  boxlabel/.style={
+    fill=white,font=\small,
+    text depth=0pt,
+  }
+}
+
