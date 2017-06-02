@@ -1,4 +1,4 @@
-\usetikzlibrary{arrows,calc,fit,positioning,backgrounds,shapes}
+\usetikzlibrary{arrows,calc,fit,patterns,positioning,backgrounds,shapes}
 
 \usepackage{fontspec}
 \setmainfont{Source Sans Pro}
@@ -22,6 +22,15 @@
   },
   onarrow/.style={
     font=\footnotesize
+  },
+  wrapper/.style={
+    dashed,draw=black!70!white,rounded corners,inner sep=3mm
+  },
+  wrapperlabel/.style={
+    fill=white,font=\scriptsize,
+    text depth=0pt,
+    anchor=west,
+    xshift=-2mm
   },
   box/.style={
     draw=black!30!white,line width=2pt,rounded corners,inner sep=3mm
