@@ -1,3 +1,5 @@
-%.png: %.tex preamble.tex
+%.pdf: %.tex preamble.tex
 	lualatex $<
-	convert -density 300 -flatten $*.pdf $@
+
+%.png: %.pdf
+	convert -background white -density 300 -flatten $*.pdf $@
